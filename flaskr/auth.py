@@ -67,6 +67,23 @@ def login():
 
     return render_template('auth/login.html')
 
+
+@bp.route('/login', methods=('GET', 'POST'))
+def web3_login():
+    if request.method == 'POST':
+        
+        db = get_db()
+        error = None
+
+        if error is None:
+            session.clear()
+            session['user_id'] = user['id']
+            return redirect(url_for('index'))
+
+        flash(error)
+
+    return render_template('auth/login.html')
+
 @bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
