@@ -2,6 +2,7 @@
 
 /**
  * Example JavaScript code that interacts with the page and Web3 wallets
+ * THIS SCRIPT
  */
 
 // Unpkg imports
@@ -134,6 +135,7 @@ async function refreshAccountData() {
 async function onConnect() {
   console.log("Opening a dialog", web3Modal);
   try {
+    // source code: https://github.com/Web3Modal/web3modal/blob/master/src/core/index.tsx#L71
     provider = await web3Modal.connect();
   } catch (e) {
     console.log("Could not get a wallet connection", e);
@@ -178,9 +180,6 @@ async function onDisconnect() {
 
   selectedAccount = null;
 
-  // Set the UI back to the initial state
-  document.querySelector("#prepare").style.display = "block";
-  document.querySelector("#connected").style.display = "none";
 }
 
 /**

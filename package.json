@@ -1,0 +1,35 @@
+{
+  "dependencies": {
+    "@truffle/contract": "^4.3.43",
+    "browserify": "^17.0.0",
+    "evm-chains": "^0.2.0",
+    "ipfs-http-client": "^54.0.2",
+    "uuid": "^8.3.2",
+    "web3": "^1.6.1",
+    "web3modal": "^1.9.4"
+  },
+  "name": "flaskr_demo_project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhiDung-hub/Flaskr_demo_project.git"
+  },
+  "author": "Phi Dung",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PhiDung-hub/Flaskr_demo_project/issues"
+  },
+  "homepage": "https://github.com/PhiDung-hub/Flaskr_demo_project#readme",
+  "description": "Demo web3 blog using flask",
+  "keywords": [
+    "web3",
+    "flask"
+  ]
+}
