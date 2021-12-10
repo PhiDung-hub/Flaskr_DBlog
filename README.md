@@ -6,7 +6,7 @@ For logging out function, now I use FLASK's `session.clear()` and try adding Web
 
 Profile is to register username, default is user address.
 
-`example.html` and `index.html` and brought from Web3Modal vanilla js example. Not part of the app.
+`example.html` and `index.html` are brought from Web3Modal vanilla js example. Not part of the app.
 
 `metafora_main.js` is main script from http://metafora.app. This is to see how the login flow work, *(line **131** to **200** for metamask auth)*
 
