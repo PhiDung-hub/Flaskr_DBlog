@@ -119,9 +119,10 @@ async function onConnectWeb3Modal() {
 
   // Generate a message padded with nonce.
   const message = String(
-    "I aggree to login on this page" +
-      "\n\nSecurity code, please ignore: " +
-      self.crypto.randomUUID().toString()
+    "I agree to login on this page." +
+      "\nLogin time: " +
+      new Date().toLocaleDateString("en-US")
+    // self.crypto.randomUUID().toString()
   );
   console.log("Message is: ", message);
 
@@ -134,7 +135,6 @@ async function onConnectWeb3Modal() {
     {
       account: selectedAccount,
       signature: signature,
-      message: message,
     },
     (response) => {
       console.log("Response from server:\n", response);

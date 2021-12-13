@@ -13,6 +13,7 @@ from flaskr.db import get_db
 from web3.auto import w3  # web3.py library. Might need in the future?
 from eth_account.messages import encode_defunct
 
+from datetime import datetime
 
 # Blue print for routing
 bp = Blueprint("auth", __name__, url_prefix="/")
@@ -75,13 +76,15 @@ def profile():
 def login():
     if request.method == 'POST':
         usr_data = request.form
-        print(usr_data, file=sys.stderr)
+        print("POST data: ", usr_data, file=sys.stderr)  # for debugging
 
         account = usr_data['account']
-        msg = usr_data['message']
         signature = usr_data['signature']
+        # Get the authentication message.
+        msg = "I agree to login on this page.\nLogin time: " + \
+            datetime.now().strftime("%m/%d/%Y")
+        print("Authentication msg: ", msg)  # for logging
         msg = encode_defunct(text=msg)
-        print("msg:", msg)
         signature = w3.toBytes(hexstr=signature)
         # print("signature:", signature)
         signed_address = w3.eth.account.recover_message(
@@ -96,7 +99,7 @@ def login():
         error = None
 
         if not valid:
-            error = 'Invalid signature'
+            error = 'Invalid signature or time out, please try again'
 
         user = db.execute(
             'SELECT * FROM user WHERE public_address = ?', (account,)
