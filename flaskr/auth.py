@@ -11,6 +11,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flaskr.db import get_db
 
 from web3.auto import w3  # web3.py library. Might need in the future?
+from eth_account.messages import encode_defunct
 
 
 # Blue print for routing
@@ -77,10 +78,21 @@ def login():
         print(usr_data, file=sys.stderr)
 
         account = usr_data['account']
-        # since a string is parsed
-        valid = (usr_data['valid'] == 'true')
+        msg = usr_data['message']
+        signature = usr_data['signature']
+        msg = encode_defunct(text=msg)
+        print("msg:", msg)
+        signature = w3.toBytes(hexstr=signature)
+        # print("signature:", signature)
+        signed_address = w3.eth.account.recover_message(
+            msg, signature=signature).lower()
+
+        valid = (account == signed_address)
+        print("account:", account)
+        print("signed_address:", signed_address)
 
         db = get_db()
+
         error = None
 
         if not valid:
@@ -102,7 +114,6 @@ def login():
                 'SELECT * FROM user WHERE public_address = ?', (account,)
             ).fetchone()
 
-        print(error)
         if error is None:
             print(f"Index to redirect: {url_for('index')}")
             session.clear()

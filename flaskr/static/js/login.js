@@ -58,6 +58,8 @@ async function sign(message) {
  * sign using MetaMask API.
  */
 async function signMetaMask(message, account) {
+  console.log("Signing message: " + message);
+  console.log(ethers.utils.hexlify(ethers.utils.toUtf8Bytes(message)));
   const signature = await ethereum.request({
     method: "personal_sign",
     params: [message, account],
@@ -86,38 +88,14 @@ async function verifyMessage(message, signature, address) {
  * Connect using MetaMask API.
  */
 async function onConnect() {
-  try {
-    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-    selectedAccount = accounts[0];
-    // Generate a random message (the nonce).
-    const message = self.crypto.randomUUID();
-    // Sign the message.
-    let signature = await signMetaMask(message, selectedAccount);
-    // Verify the signature.
-    let valid_signature = await verifyMessage(
-      message,
-      signature,
-      selectedAccount
-    );
-    console.log("Signature is valid: ", valid_signature);
-
-    console.log("Posting message to server:\n");
-    $.post(
-      "./login",
-      {
-        account: account,
-        valid_signature: valid_signature,
-      },
-      (response) => {
-        console.log("Response from server:\n", response);
-        window.location = response;
-      }
-    );
-  } catch (err) {
-    console.log(err);
-  }
+  const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+  selectedAccount = accounts[0];
+  // Generate a random message (the nonce).
+  const message = self.crypto.randomUUID();
+  // Sign the message.
+  let signature = await signMetaMask(message, selectedAccount);
+  // TODO: make a POST request to the backend.
 }
-
 /**
  * Connect using web3Modal API.
  * @returns a POST request contain account and signature validity.
@@ -138,23 +116,25 @@ async function onConnectWeb3Modal() {
   // MetaMask does not give you all accounts, only the selected account
   console.log("Got accounts", accounts);
   selectedAccount = accounts[0];
-  // Generate a random message (the nonce).
-  const message = self.crypto.randomUUID();
+
+  // Generate a message padded with nonce.
+  const message = String(
+    "I aggree to login on this page" +
+      "\n\nSecurity code, please ignore: " +
+      self.crypto.randomUUID().toString()
+  );
+  console.log("Message is: ", message);
+
   // Sign the message.
   let signature = await signMetaMask(message, selectedAccount);
-  // Verify the signature.
-  let valid_signature = await verifyMessage(
-    message,
-    signature,
-    selectedAccount
-  );
 
   console.log("Posting message to server:\n");
   $.post(
     "./login",
     {
       account: selectedAccount,
-      valid: valid_signature,
+      signature: signature,
+      message: message,
     },
     (response) => {
       console.log("Response from server:\n", response);
