@@ -1,6 +1,6 @@
 "use strict";
 
-const { WalletLink } = require("walletlink");
+// const { WalletLink } = require("walletlink");
 
 /**
  * Example JavaScript code that interacts with the page and Web3 wallets
@@ -42,12 +42,12 @@ function init() {
         infuraId: INFURA_ID,
       },
     },
-    walletlink: {
-      package: WalletLink,
-      options: {
-        infuraId: INFURA_ID,
-      },
-    },
+    // walletlink: {
+    //   package: WalletLink,
+    //   options: {
+    //     infuraId: INFURA_ID,
+    //   },
+    // },
   };
 
   web3Modal = new Web3Modal({
