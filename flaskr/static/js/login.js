@@ -1,7 +1,5 @@
 "use strict";
 
-// const { WalletLink } = require("walletlink");
-
 /**
  * Example JavaScript code that interacts with the page and Web3 wallets
  */
@@ -9,6 +7,8 @@
 // Unpkg imports
 const ethers = window.ethers; // for signing.
 const Web3Modal = window.Web3Modal.default;
+
+// const { WalletLink } = require("walletlink");
 
 // Web3modal instance
 let web3Modal;
@@ -20,7 +20,7 @@ let provider;
 let selectedAccount;
 let web3;
 
-const INFURA_ID = "<YOUR_INFURA_ID>";
+const INFURA_ID = "<PROJECT_ID>";
 
 /**
  * Setup the orchestra
@@ -42,12 +42,12 @@ function init() {
         infuraId: INFURA_ID,
       },
     },
-    // walletlink: {
-    //   package: WalletLink,
-    //   options: {
-    //     infuraId: INFURA_ID,
-    //   },
-    // },
+    walletlink: {
+      package: WalletLink,
+      options: {
+        infuraId: INFURA_ID,
+      },
+    },
   };
 
   web3Modal = new Web3Modal({
